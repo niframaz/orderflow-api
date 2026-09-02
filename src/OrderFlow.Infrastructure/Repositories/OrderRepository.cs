@@ -19,9 +19,5 @@ namespace OrderFlow.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.Id == orderId, cancellationToken);
         }
 
-        public async Task SaveAsync(Order order, CancellationToken cancellationToken)
-        {
-            await context.SaveChangesAsync(cancellationToken);
-        }
     }
 }

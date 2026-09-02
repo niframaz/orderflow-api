@@ -2,7 +2,7 @@
 
 namespace OrderFlow.Application.Orders.Commands.ConfirmOrder
 {
-    public class ConfirmOrderHandler(IOrderRepository orderRepository)
+    public class ConfirmOrderHandler(IOrderRepository orderRepository, IUnitOfWork unitOfWork)
     {
         public async Task Handle(ConfirmOrderCommand command, CancellationToken cancellationToken)
         {
@@ -11,7 +11,7 @@ namespace OrderFlow.Application.Orders.Commands.ConfirmOrder
 
             order.Confirm();
 
-            await orderRepository.SaveAsync(order, cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

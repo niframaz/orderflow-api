@@ -10,7 +10,7 @@ namespace OrderFlow.Domain.Entities
         private readonly List<OrderItem> _items = [];
         public Guid Id { get; private set; }
         public Guid CustomerId { get; private set; }
-        public ShippingAddress ShippingAddress { get; private set; } = default!;
+        public ShippingAddress ShippingAddress { get; private set; } = null!;
         public DateTime CreatedAt { get; private set; }
         public OrderStatus Status { get; set; }
         public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
@@ -88,7 +88,7 @@ namespace OrderFlow.Domain.Entities
         private void EnsureStatus(OrderStatus expectedStatus)
         {
             if(Status  != expectedStatus)
-                throw new InvalidOperationException($"Prder muste be {expectedStatus}.");
+                throw new InvalidOperationException($"Order must be {expectedStatus}.");
         }
     }
 }
