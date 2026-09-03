@@ -14,7 +14,11 @@ namespace OrderFlow.Infrastructure.Persistence.Configurations
 
             builder.Property(x => x.Name).HasMaxLength(200).IsRequired();
 
-            builder.Property(x => x.Price).HasPrecision(18, 2).IsRequired();
+            builder.OwnsOne(x => x.Price, price =>
+            {
+                price.Property(p => p.Amount).HasColumnName("PriceAmount").HasPrecision(18, 2).IsRequired();
+                price.Property(p => p.Currency).HasColumnName("PriceCurrency").HasMaxLength(3).IsRequired();
+            });
 
             builder.Property(x => x.StockQuantity).IsRequired();
         }

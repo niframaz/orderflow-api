@@ -13,7 +13,7 @@ namespace OrderFlow.Application.Orders.Queries.GetOrder
                 return null;
 
             return new OrderDto(order.Id, order.CustomerId, order.CreatedAt, order.Status.ToString(), order.GetTotal(), 
-                [.. order.Items.Select(item => new OrderItemDto(item.ProductId, item.Quantity, item.UnitPrice, item.GetTotal()))]);
+                [.. order.Items.Select(item => new OrderItemDto(item.ProductId, item.Quantity, item.UnitPrice.Amount, item.GetTotal()))]);
         }
     }
 }

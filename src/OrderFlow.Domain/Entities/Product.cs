@@ -1,20 +1,24 @@
-﻿namespace OrderFlow.Domain.Entities
+﻿using OrderFlow.Domain.ValueObjects;
+
+namespace OrderFlow.Domain.Entities
 {
     public class Product
     {
         public Guid Id { get; private set; }
         public string Name { get; private set; } = null!;
-        public decimal Price { get; private set; }
+        public Money Price { get; private set; } = null!;
         public int StockQuantity { get; private set; }
 
         private Product() { }
 
-        public Product(string name, decimal price, int stockQuantity)
+        public Product(string name, Money price, int stockQuantity)
         {
             if (string.IsNullOrWhiteSpace(name)) 
                 throw new ArgumentException("Product name is required.");
 
-            if (price < 0)
+            ArgumentNullException.ThrowIfNull(price);
+
+            if (price.Amount < 0)
                 throw new ArgumentException("Product price cannot be negative.");
 
             if (stockQuantity < 0)
@@ -26,9 +30,11 @@
             StockQuantity = stockQuantity;
         }
 
-        public void ChangePrice(decimal newPrice)
+        public void ChangePrice(Money newPrice)
         {
-            if (newPrice < 0)
+            ArgumentNullException.ThrowIfNull(newPrice);
+
+            if (newPrice.Amount < 0)
                 throw new ArgumentException("Product price cannot be negative.");
 
             Price = newPrice;

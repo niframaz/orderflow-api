@@ -26,7 +26,7 @@ namespace OrderFlow.Domain.Entities
             Status = OrderStatus.Pending;
         }
 
-        public void AddItem(Guid productId, int quantity, decimal unitPrice)
+        public void AddItem(Guid productId, int quantity, Money unitPrice)
         {
             if (Status != OrderStatus.Pending)
                 throw new InvalidOperationException("Items can only be added to a pending order.");
