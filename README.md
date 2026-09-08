@@ -26,8 +26,8 @@ This is **"An enterprise distributed order-management and fulfillment platform d
 ```
 Phase 1:  Modular Monolith (Foundation) ✅ COMPLETE
 Phase 2:  Clean Architecture + DDD ✅ COMPLETE
-Phase 3:  CQRS + Mediator ← CURRENT
-Phase 4:  Advanced SQL Server
+Phase 3:  CQRS + Mediator ✅ COMPLETE
+Phase 4:  Advanced SQL Server ← CURRENT
 Phase 5:  Authentication / Authorization
 Phase 6:  Angular Enterprise UI
 Phase 7:  SignalR (Real-time)
@@ -43,7 +43,30 @@ Phase 15: AKS / Advanced Azure
 
 ## Current Status
 
-**Phase:** 3 - CQRS + Mediator (Starting)
+**Phase:** 4 - Advanced SQL Server ← NEXT
+
+**Phase 3 Complete ✅** - Commits:
+- **4841062** - Validation pipeline behavior
+  - FluentValidation + DependencyInjectionExtensions packages
+  - ValidationBehavior<TRequest, TResponse> pipeline
+  - CreateOrderValidator with rules for CustomerId, Items, ProductId, Quantity
+  - Registered with AddOpenBehavior and AddValidatorsFromAssembly
+  - Validates requests before handler execution
+  
+- **adfec89** - Logging pipeline behavior
+  - LoggingBehavior<TRequest, TResponse> pipeline
+  - Logs request name on entry/completion
+  - Measures execution time with Stopwatch
+  - Logs errors with exception details
+  - Security: Only logs request name (no sensitive data)
+
+**Phase 3 Achievements:**
+- ✅ CQRS pattern (Commands/Queries already separated)
+- ✅ MediatR pipeline with behaviors
+- ✅ Validation pipeline behavior (FluentValidation)
+- ✅ Logging pipeline behavior (timing + exceptions)
+- ✅ Architectural decision: No TransactionBehavior needed (EF Core provides atomicity)
+- ✅ Pipeline order: Validation → Logging → Handler
 
 **Phase 2 Complete ✅** - Commits:
 - **d30dc9c** - Phase 2 foundation
@@ -86,23 +109,24 @@ Phase 15: AKS / Advanced Azure
 
 ## Technology Stack & Learning Path
 
-### Current (Phase 2)
+### Current (Phase 3)
 - **.NET 8** - Core framework
 - **EF Core** - ORM and data access
 - **SQL Server (Local)** - Database
 - **Clean Architecture** - Layered architecture
 - **DDD** - Domain modeling approach (Entities, Value Objects, Aggregates, Domain Events)
-- **MediatR** - CQRS pattern (Commands, Queries, Handlers)
+- **MediatR** - CQRS pattern (Commands, Queries, Handlers, Pipeline Behaviors)
+- **FluentValidation** - Request validation pipeline
 
 ### Complete Learning Roadmap
 
 | Area | What You'll Master | Phase |
 |------|-------------------|-------|
 | **C# / .NET** | Advanced APIs, async/await, DI, middleware, performance | 1-15 |
-| **Clean Architecture** | Separation of concerns, dependency inversion | 2 ← |
-| **DDD** | Aggregates, entities, value objects, domain events | 2 ← |
-| **CQRS** | Separate read/write models, command/query handlers | 3 |
-| **MediatR** | Request/response patterns, pipeline behaviors | 3 |
+| **Clean Architecture** | Separation of concerns, dependency inversion | 2 ✅ |
+| **DDD** | Aggregates, entities, value objects, domain events | 2 ✅ |
+| **CQRS** | Separate read/write models, command/query handlers | 3 ✅ |
+| **MediatR** | Request/response patterns, pipeline behaviors | 3 ✅ |
 | **SQL Server** | Indexing, transactions, locking, execution plans, optimization | 4 |
 | **EF Core** | Advanced ORM usage, query optimization, change tracking | 4 |
 | **Authentication** | OAuth2/OIDC, JWT, RBAC, MFA | 5 |
@@ -231,7 +255,7 @@ OrderFlow/
 
 ## Notes
 
-**Last Updated:** 2026-09-03
+**Last Updated:** 2026-09-08
 
 **Project Philosophy:**
 - One permanent engineering laboratory evolving from monolith → distributed system
