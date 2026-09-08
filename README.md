@@ -24,9 +24,9 @@ This is **"An enterprise distributed order-management and fulfillment platform d
 ## Phase Roadmap
 
 ```
-Phase 1:  Modular Monolith (Foundation)
-Phase 2:  Clean Architecture + DDD ← CURRENT
-Phase 3:  CQRS + Mediator
+Phase 1:  Modular Monolith (Foundation) ✅ COMPLETE
+Phase 2:  Clean Architecture + DDD ✅ COMPLETE
+Phase 3:  CQRS + Mediator ← CURRENT
 Phase 4:  Advanced SQL Server
 Phase 5:  Authentication / Authorization
 Phase 6:  Angular Enterprise UI
@@ -43,40 +43,46 @@ Phase 15: AKS / Advanced Azure
 
 ## Current Status
 
-**Phase:** 2 - Clean Architecture + DDD (In Progress)
+**Phase:** 3 - CQRS + Mediator (Starting)
 
-**Completed:**
-- ✅ **Committed:** Phase 2 foundation (d30dc9c)
+**Phase 2 Complete ✅** - Commits:
+- **d30dc9c** - Phase 2 foundation
   - Clean Architecture layers (Domain, Application, Infrastructure, API)
   - Entity base class with audit fields and domain events
   - Domain entities: Order, OrderItem, Product, Customer
   - ShippingAddress value object (immutable record)
   - Repository pattern (IOrderRepository, IProductRepository)
   - Unit of Work pattern (IUnitOfWork implemented by DbContext)
-  - Removed SaveAsync from repositories (UnitOfWork responsibility)
   - Outbox pattern for reliable event publishing
-  - EF Core entity configurations
   - MediatR handlers (CreateOrder, ConfirmOrder, GetOrder)
 
-**In Progress:**
-- ⏳ Money value object implementation
-  - Create Money.cs (Amount + Currency)
-  - Update Product.Price: decimal → Money
-  - Update OrderItem.UnitPrice: decimal → Money
-  - Update EF Core configurations (OwnsOne)
-  - Create and apply migration
+- **dcc5687** - Money value object
+  - Money value object (Amount + Currency with validation)
+  - Product.Price and OrderItem.UnitPrice use Money
+  - EF Core OwnsOne configurations
+  - Migration applied successfully
 
-**Next (After Money):**
-- Aggregate Root design validation
-- Domain Services
-- Domain unit tests
-- Complete Phase 2
+- **33e6c18** - Domain unit tests
+  - OrderTests (9 tests covering aggregate behavior)
+  - MoneyTests (value object validation)
+  - ShippingAddressTests (value object structure)
+  - All 12 tests passing
 
-**Next Phase (Phase 3):**
-- Already partially implemented (MediatR handlers exist)
-- Add pipeline behaviors (validation, logging, transactions)
-- Separate read models from write models
-- Optimize queries
+**Phase 2 Achievements:**
+- ✅ Clean Architecture with proper dependency inversion
+- ✅ DDD tactical patterns (Entities, Value Objects, Aggregates)
+- ✅ Domain events infrastructure
+- ✅ Repository + Unit of Work patterns
+- ✅ Aggregate Root encapsulation verified
+- ✅ Domain Services evaluated (not needed yet)
+- ✅ Domain unit tests (12/12 passing)
+
+**Phase 3 Goals:**
+- Understand CQRS concept and when to use it
+- Separate Commands (writes) from Queries (reads)
+- Implement pipeline behaviors (validation, logging, transactions)
+- Optimize read models
+- Add FluentValidation for request validation
 
 ## Technology Stack & Learning Path
 
@@ -225,7 +231,7 @@ OrderFlow/
 
 ## Notes
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-03
 
 **Project Philosophy:**
 - One permanent engineering laboratory evolving from monolith → distributed system

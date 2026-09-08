@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using OrderFlow.Application.Abstractions.Messaging;
 using OrderFlow.Application.Abstractions.Persistence;
+using OrderFlow.Application.Common.Behaviors;
 using OrderFlow.Application.Orders.Commands.ConfirmOrder;
 using OrderFlow.Application.Orders.Commands.CreateOrder;
 using OrderFlow.Infrastructure.Messaging;
@@ -11,7 +13,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<OrderFlowDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OrderFlow")));
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateOrderCommand).Assembly));
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(CreateOrderCommand).Assembly);
+    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+});
+
+builder.Services.AddValidatorsFromAssembly(typeof(CreateOrderCommand).Assembly);
 
 builder.Services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
 
