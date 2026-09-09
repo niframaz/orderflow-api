@@ -60,6 +60,13 @@ Phase 15: AKS / Advanced Azure
   - Logs errors with exception details
   - Security: Only logs request name (no sensitive data)
 
+- **17775e0** - Application pipeline behavior tests
+  - Created OrderFlow.Application.Tests project
+  - ValidationBehaviorTests with 2 tests
+  - Verify invalid requests throw ValidationException
+  - Verify valid requests call next handler
+  - All 14 tests passing (12 domain + 2 application)
+
 **Phase 3 Achievements:**
 - ✅ CQRS pattern (Commands/Queries already separated)
 - ✅ MediatR pipeline with behaviors
