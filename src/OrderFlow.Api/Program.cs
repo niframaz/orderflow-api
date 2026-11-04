@@ -28,8 +28,10 @@ builder.Services.AddScoped<ConfirmOrderHandler>();
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IOrderReadRepository, OrderReadRepository>();
 
-builder.Services.AddScoped<IUnitOfWork, OrderFlowDbContext>();
+builder.Services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<OrderFlowDbContext>());
+
 
 builder.Services.AddControllers();
 
