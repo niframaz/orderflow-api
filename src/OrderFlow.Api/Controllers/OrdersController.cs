@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OrderFlow.Application.Orders.Commands.CreateOrder;
 using OrderFlow.Application.Orders.Queries.GetOrder;
@@ -9,6 +10,7 @@ namespace OrderFlow.Api.Controllers
     [ApiController]
     public class OrdersController(IMediator mediator) : ControllerBase
     {
+        [Authorize]
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(Guid id, CancellationToken cancellationToken)
         {
