@@ -8,5 +8,6 @@
   <Folder Name="/tests/">
     <Project Path="tests/OrderFlow.Application.Tests/OrderFlow.Application.Tests.csproj" />
     <Project Path="tests/OrderFlow.Domain.Tests/OrderFlow.Domain.Tests.csproj" />
+    <Project Path="tests/OrderFlow.Infrastructure.Tests/OrderFlow.Infrastructure.Tests.csproj" Id="c74c08a3-25c0-42e7-b102-8ce74fceef2f" />
   </Folder>
 </Solution>

@@ -4,15 +4,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OrderFlow.Application.Abstractions.Messaging;
 using OrderFlow.Application.Abstractions.Persistence;
+using OrderFlow.Application.Abstractions.Security;
 using OrderFlow.Application.Common.Behaviors;
 using OrderFlow.Application.Orders.Commands.ConfirmOrder;
 using OrderFlow.Application.Orders.Commands.CreateOrder;
+using OrderFlow.Infrastructure.Authentication;
 using OrderFlow.Infrastructure.Messaging;
 using OrderFlow.Infrastructure.Persistence;
 using OrderFlow.Infrastructure.Repositories;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
 
 builder.Services.AddDbContext<OrderFlowDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OrderFlow")));
 
@@ -59,7 +63,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddControllers();
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
 var app = builder.Build();
 
